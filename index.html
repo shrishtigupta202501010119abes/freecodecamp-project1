@@ -1,0 +1,212 @@
+# index.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Quote Machine</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+    }
+
+    #root {
+      width: 100%;
+    }
+
+    #quote-box {
+      width: 650px;
+      max-width: 90%;
+      margin: auto;
+      background: white;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    #text {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    #author {
+      font-size: 1.2rem;
+      color: #666;
+      font-style: italic;
+      margin-bottom: 30px;
+      text-align: right;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    #tweet-quote {
+      text-decoration: none;
+      background: #1da1f2;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    #tweet-quote:hover {
+      transform: scale(1.05);
+    }
+
+    #new-quote {
+      border: none;
+      background: #4facfe;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    #new-quote:hover {
+      background: #3395ff;
+    }
+
+    @media (max-width: 600px) {
+      .buttons {
+        flex-direction: column;
+      }
+
+      #tweet-quote,
+      #new-quote {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const quotes = [
+      {
+        text: "The future depends on what you do today.",
+        author: "Mahatma Gandhi"
+      },
+      {
+        text: "Success is not final, failure is not fatal.",
+        author: "Winston Churchill"
+      },
+      {
+        text: "Believe you can and you're halfway there.",
+        author: "Theodore Roosevelt"
+      },
+      {
+        text: "Dream big and dare to fail.",
+        author: "Norman Vaughan"
+      },
+      {
+        text: "Stay hungry, stay foolish.",
+        author: "Steve Jobs"
+      },
+      {
+        text: "Do one thing every day that scares you.",
+        author: "Eleanor Roosevelt"
+      },
+      {
+        text: "In the middle of difficulty lies opportunity.",
+        author: "Albert Einstein"
+      },
+      {
+        text: "Life is what happens when you're busy making other plans.",
+        author: "John Lennon"
+      },
+      {
+        text: "It always seems impossible until it's done.",
+        author: "Nelson Mandela"
+      },
+      {
+        text: "Don't watch the clock; do what it does. Keep going.",
+        author: "Sam Levenson"
+      }
+    ];
+
+    function App() {
+      const getRandomQuote = () => {
+        return quotes[Math.floor(Math.random() * quotes.length)];
+      };
+
+      const [quote, setQuote] = React.useState(getRandomQuote());
+
+      const newQuote = () => {
+        let randomQuote = getRandomQuote();
+
+        while (randomQuote.text === quote.text) {
+          randomQuote = getRandomQuote();
+        }
+
+        setQuote(randomQuote);
+      };
+
+      return (
+        <div id="quote-box">
+          <div id="text">
+            "{quote.text}"
+          </div>
+
+          <div id="author">
+            - {quote.author}
+          </div>
+
+          <div className="buttons">
+            <a
+              id="tweet-quote"
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                `"${quote.text}" - ${quote.author}`
+              )}`}
+              target="_blank"
+            >
+              Tweet Quote
+            </a>
+
+            <button id="new-quote" onClick={newQuote}>
+              New Quote
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(
+      document.getElementById("root")
+    );
+
+    root.render(<App />);
+  </script>
+
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</body>
+</html>
+```
